@@ -1,0 +1,93 @@
+name: Autograding Tests
+'on':
+  - push
+  - repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Exercise 1a
+        id: exercise1a
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise1a
+          setup-command: ''
+          command: "./mvnw test -Dtest=Exercise1aTest"
+          timeout: 1
+          max-score: 1
+
+      - name: Exercise 1b
+        id: exercise1b
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise1b
+          setup-command: ''
+          command: "./mvnw test -Dtest=Exercise1bTest"
+          timeout: 1
+          max-score: 1
+
+      - name: Exercise 2a
+        id: exercise2a
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise2a
+          setup-command: ''
+          command: "./mvnw test -Dtest=Exercise2aTest"
+          timeout: 1
+          max-score: 1
+
+      - name: Exercise 2b
+        id: exercise2b
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise2b
+          setup-command: ''
+          command: "./mvnw test -Dtest=Exercise2bTest"
+          timeout: 1
+          max-score: 1
+
+      - name: Exercise 3a
+        id: exercise3a
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise3a
+          setup-command: ''
+          command: "./mvnw test -Dtest=Exercise3aTest"
+          timeout: 1
+          max-score: 1
+
+      - name: Exercise 3b
+        id: exercise3b
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Exercise3b
+          setup-command: ''
+          command: "./mvnw test -Dtest=Exercise3bTest"
+          timeout: 1
+          max-score: 1
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          EXERCISE1A_RESULTS: "${{steps.exercise1a.outputs.result}}"
+          EXERCISE1B_RESULTS: "${{steps.exercise1b.outputs.result}}"
+          EXERCISE2A_RESULTS: "${{steps.exercise2a.outputs.result}}"
+          EXERCISE2B_RESULTS: "${{steps.exercise2b.outputs.result}}"
+          EXERCISE3A_RESULTS: "${{steps.exercise3a.outputs.result}}"
+          EXERCISE3B_RESULTS: "${{steps.exercise3b.outputs.result}}"
+        with:
+          runners: exercise1a,exercise1b,exercise2a,exercise2b,exercise3a,exercise3b
