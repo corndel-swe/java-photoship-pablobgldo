@@ -182,6 +182,6 @@ public class Pixels {
      * @return The RGB list with the adjusted brightness.
      */
     public static List<Integer> adjustBrightness(List<Integer> rgb, int brightness) {
-        return rgb.stream().map(x -> x + brightness).toList();
+        return rgb.stream().map(x -> (x + brightness >= 0 && x + brightness < 256) ? x + brightness : x).toList().stream().map(x -> (x + brightness < 0) ? 0 : x).toList().stream().map(x -> (x + brightness > 255) ? 255 : x).toList();
     }
 }
