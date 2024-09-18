@@ -160,9 +160,9 @@ public class Pixels {
         double green = ((0.349 * R) + (0.686 * G) + (0.168 * B));
         double blue = ((0.272 * R) + (0.534 * G) + (0.131 * B));
 
-        rgb.set(0, (int) red);
-        rgb.set(1, (int) green);
-        rgb.set(2, (int) blue);
+        rgb.set(0, Math.min((int) red, 255));
+        rgb.set(1, Math.min((int) green, 255));
+        rgb.set(2, Math.min((int) blue, 255));
 
         return rgb;
     }
