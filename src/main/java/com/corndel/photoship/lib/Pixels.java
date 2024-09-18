@@ -74,12 +74,9 @@ public class Pixels {
      */
     public static List<Integer> grayscale(List<Integer> rgb) {
         // Calculate the average of the red, green, and blue values
-        int average = (rgb.get(0) + rgb.get(1) + rgb.get(2)) / 3;
-        rgb.set(0, average);
-        rgb.set(1, average);
-        rgb.set(2, average);
         // Set all components to the average value to create a grayscale effect
-        return rgb;
+        int average = (rgb.get(0) + rgb.get(1) + rgb.get(2)) / 3;
+        return rgb.stream().map(x -> average).toList();
     }
 
     /**
@@ -99,15 +96,10 @@ public class Pixels {
         // to 255 (white)
         int average = (rgb.get(0) + rgb.get(1) + rgb.get(2)) / 3;
         if (average < 128) {
-            rgb.set(0, 0);
-            rgb.set(1, 0);
-            rgb.set(2, 0);
+            return rgb.stream().map(x -> 0).toList();
         } else {
-            rgb.set(0, 255);
-            rgb.set(1, 255);
-            rgb.set(2, 255);
+            return rgb.stream().map(x -> 255).toList();
         }
-        return rgb;
     }
 
     /**
